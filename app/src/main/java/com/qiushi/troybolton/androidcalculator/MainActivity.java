@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,6 +136,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 				case Types.SUBTRACTION:
 					items.add(new Item(numLeft - numRight, Types.NUMBER));
 					break;
+			}
+		}
+	}
+
+	private long lastClickTime = 0;
+
+	@Override
+	public void onBackPressed() {
+//		super.onBackPressed();
+
+		if (lastClickTime <= 0) {
+			Toast.makeText(this, "Press \"Back\" Again to Exit", Toast.LENGTH_SHORT).show();
+			lastClickTime = System.currentTimeMillis();
+		} else {
+			long currentClickTime = System.currentTimeMillis();
+			if (currentClickTime - lastClickTime < 1100) {
+				finish();
+			} else {
+				Toast.makeText(this, "Press \"Back\" Again to Exit", Toast.LENGTH_SHORT).show();
+				lastClickTime = currentClickTime;
 			}
 		}
 	}
